@@ -28,3 +28,49 @@ Las implicaciones prácticas de este modelo distribuido son:
 
 + Ramas y experimentación más ágiles: crear y fusionar ramas es rápido y económico, ya que no depende de comunicación constante con un servidor.
 
+## Comandos básicos de Git
+
+| Comando | Qué hace |
+|---|---|
+| `git add archivo.txt` | Agrega los cambios de un archivo al **área de preparación** (staging area), marcándolos como listos para ser incluidos en el próximo commit. Se puede usar `git add .` para agregar todos los cambios. |
+| `git commit -m "mensaje"` | Guarda de forma permanente los cambios que están en el área de preparación, creando un nuevo punto en el historial del repositorio, junto con un mensaje que describe qué se hizo. |
+| `git branch` | Muestra la lista de ramas del repositorio. También sirve para crear una nueva rama: `git branch nombre-rama`. |
+| `git merge nombre-rama` | Combina los cambios de otra rama con la rama actual, integrando el trabajo hecho en paralelo. |
+| `git log` | Muestra el historial de commits del repositorio: quién hizo cada cambio, cuándo y con qué mensaje. |
+
+### Ejemplo de flujo básico
+
+```bash
+git add .
+git commit -m "Agrega función de inicio de sesión"
+git branch nueva-funcionalidad
+git checkout nueva-funcionalidad
+# se hacen cambios...
+git add .
+git commit -m "Implementa validación de formulario"
+git checkout main
+git merge nueva-funcionalidad
+git log
+```
+
+## Otras plataformas similares a GitHub
+
+Además de GitHub, existen otras plataformas que también permiten alojar repositorios de Git en la nube y ofrecen herramientas de colaboración:
+
+### GitLab
+
+- Ofrece funciones muy similares a GitHub: repositorios, issues, pull requests (llamados *merge requests*), wikis, etc.
+- Se destaca por su fuerte integración de **CI/CD** (integración y despliegue continuo) incluida directamente en la plataforma.
+- Existe una versión en la nube (gitlab.com) y también se puede **instalar en servidores propios** (self-hosted), lo cual es muy usado por empresas que quieren mantener el control total de su infraestructura.
+- Es de código abierto en su edición "Community".
+
+### Bitbucket
+
+- Desarrollado por **Atlassian**, la misma empresa detrás de Jira y Trello.
+- Se integra muy bien con otras herramientas de Atlassian, lo que lo hace popular en equipos que ya usan ese ecosistema para gestión de proyectos.
+- Ofrece repositorios de Git, pull requests, y pipelines de CI/CD (Bitbucket Pipelines).
+- Tiene planes gratuitos para equipos pequeños y planes pagos para equipos más grandes.
+
+Son plataformas que cumplen una función similar, alojan repositorios Git en internet y agregan herramientas de colaboración (issues, revisiones de código, automatización, etc.). La elección entre una u otra suele depender de las necesidades del equipo, el ecosistema de herramientas que ya usan, o si necesitan alojar el código en sus propios servidores en lugar de en la nube.
+
+
