@@ -1,3 +1,9 @@
+# Mi primera práctica con Git
+
+Este repositorio fue creado para aprender los fundamentos de Git.
+
+_Isabel Valladolid_
+
 ## Git y Control de Versiones
 
 Git es un sistema de control de versiones que sirve para registrar todos los cambios hechos dentro de un proyecto. 
