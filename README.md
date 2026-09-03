@@ -88,3 +88,17 @@ _Datos de mi instalación_
 
 + Comando para verificarla: `git --version`
 
+## Estados principales de Git 
+
++ **Working Directory** Archivos que estamos modificando
+
++ **Staging Area** Cambios que icluiremos en el siguiente commit
+
++ **Repository** Historial de commits que Git registro
+
++ `git add` añadir archivos 
+
++ `git commit` guarda de forma permanente los cambios que están en el staging Area
+
+
+
