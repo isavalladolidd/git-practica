@@ -86,7 +86,10 @@ _Datos de mi instalación_
 
 + Verión de Git instalada: 2.50.1 (Apple Git-155)
 
-+ Comando para verificarla: `git --version`
++ Comando para verificarla:
+```bash
+git config --list
+```
 
 ## Estados principales de Git 
 
@@ -100,3 +103,42 @@ _Datos de mi instalación_
 
 + `git commit` guarda de forma permanente los cambios que están en el staging Area
 
+## Ramas en Git
+
+Una rama (branch) es una línea independiente de desarrollo dentro de un mismo repositorio. En términos simples, es como una copia paralela del proyecto en la que puedes hacer cambios, agregar código o probar cosas nuevas sin afectar el resto del proyecto (por ejemplo, la rama principal, `main`).
+Técnicamente, una rama es solo un puntero móvil que apunta a un commit específico. Cuando haces un nuevo commit estando en una rama, el puntero de esa rama avanza automáticamente para apuntar al nuevo commit, mientras que las demás ramas permanecen sin cambios.
+Por defecto, todo repositorio tiene una rama principal (históricamente llamada `master`, aunque hoy es más común main), pero se pueden crear tantas ramas adicionales como se necesite.
+
+### ¿Por qué un equipo de desarrollo utilizaría ramas?
+
+Las ramas son fundamentales para el trabajo en equipo porque permiten:
++ **Trabajar en paralelo sin interferir:** cada desarrollador puede crear su propia rama para trabajar en una funcionalidad, corrección de error o experimento, sin afectar el código que están usando sus compañeros.
+
++ **Mantener estable la rama principal:** mientras se desarrolla una nueva función en una rama separada, la rama principal (main) permanece funcional y lista para producción.
+
++ **Organizar el trabajo por tareas:** es común crear una rama por cada funcionalidad (`feature/login`), corrección (`fix/error-formulario`) o versión, lo que facilita saber en qué se está trabajando y por quién.
+
++ **Revisar el código antes de integrarlo:** las ramas permiten abrir pull requests (en GitHub) o merge requests (en GitLab) para que otros miembros del equipo revisen los cambios antes de integrarlos a la rama principal.
+Experimentar sin riesgo: si una idea no funciona, simplemente se descarta la rama sin que eso afecte al resto del proyecto.
+
++ **Facilitar el control de versiones en paralelo:** por ejemplo, se puede mantener una rama para la versión estable en producción y otra para el desarrollo de la siguiente versión.
+
+### ¿Qué hace `git merge`?
+
+`git merge` **combina los cambios de una rama con otra**, integrando el historial de commits de ambas.
+
+Por ejemplo, si estás en la rama `main` y ejecutas:
+
+```bash
+git merge nueva-funcionalidad
+```
+
+Git tomará todos los cambios (commits) hechos en la rama `nueva-funcionalidad` y los incorporará a la rama `main`, uniendo el trabajo de ambas ramas en una sola línea de desarrollo.
+
+**¿Cómo lo hace internamente?**
+
+- Si la rama principal no tuvo cambios nuevos desde que se creó la otra rama, Git simplemente mueve el puntero hacia adelante (esto se llama **fast-forward**).
+- Si ambas ramas tuvieron cambios distintos, Git crea un **commit de fusión** (merge commit) que combina ambos historiales.
+- Si los cambios afectan las mismas líneas de un mismo archivo de forma incompatible, ocurre un **conflicto de fusión**, y Git pide que la persona decida manualmente qué versión del código conservar.
+
+En resumen, `git merge` es la herramienta que permite **reunir el trabajo hecho en distintas ramas** en una sola, lo cual es esencial para colaborar en equipo sin perder el trabajo de nadie.
