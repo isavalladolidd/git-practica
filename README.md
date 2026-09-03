@@ -73,4 +73,12 @@ Además de GitHub, existen otras plataformas que también permiten alojar reposi
 
 Son plataformas que cumplen una función similar, alojan repositorios Git en internet y agregan herramientas de colaboración (issues, revisiones de código, automatización, etc.). La elección entre una u otra suele depender de las necesidades del equipo, el ecosistema de herramientas que ya usan, o si necesitan alojar el código en sus propios servidores en lugar de en la nube.
 
+## Instalación y configuración de Git 
+_Datos de mi instalación_
+
++ Sistema operativo utilizado: MacOs
+
++ Verión de Git instalada: 2.50.1 (Apple Git-155)
+
++ Comando para verificarla: `git --version`
 
