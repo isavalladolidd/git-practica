@@ -100,5 +100,3 @@ _Datos de mi instalación_
 
 + `git commit` guarda de forma permanente los cambios que están en el staging Area
 
-
-
