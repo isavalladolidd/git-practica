@@ -141,4 +141,54 @@ Git tomará todos los cambios (commits) hechos en la rama `nueva-funcionalidad` 
 - Si ambas ramas tuvieron cambios distintos, Git crea un **commit de fusión** (merge commit) que combina ambos historiales.
 - Si los cambios afectan las mismas líneas de un mismo archivo de forma incompatible, ocurre un **conflicto de fusión**, y Git pide que la persona decida manualmente qué versión del código conservar.
 
-En resumen, `git merge` es la herramienta que permite **reunir el trabajo hecho en distintas ramas** en una sola, lo cual es esencial para colaborar en equipo sin perder el trabajo de nadie.
+## El archivo `.gitignore`
+
+### ¿Para qué sirve `.gitignore`?
+
+`.gitignore` es un archivo de texto en el que se especifican **qué archivos o carpetas debe ignorar Git**, es decir, cuáles no deben rastrearse ni incluirse en los commits del repositorio.
+
+Cuando un archivo o carpeta coincide con un patrón listado en `.gitignore`, Git deja de mostrarlo como "sin seguimiento" (untracked) en `git status`, y no se agrega al repositorio aunque exista en la carpeta del proyecto.
+
+Un ejemplo típico de contenido de `.gitignore`:
+
+```
+node_modules/
+.env
+dist/
+*.log
+.DS_Store
+```
+
+### ¿Por qué normalmente no incluimos `node_modules`?
+
+`node_modules` es la carpeta donde se guardan las **dependencias** de un proyecto de Node.js (las librerías externas que instala `npm` o `yarn`). No se incluye en el repositorio por varias razones:
+
+- **Es enorme**: puede contener miles de archivos y pesar cientos de MB, lo cual haría el repositorio innecesariamente pesado y lento de clonar.
+- **Es reproducible**: todo su contenido se puede regenerar fácilmente con un solo comando (`npm install`), ya que las dependencias exactas y sus versiones quedan registradas en los archivos `package.json` y `package-lock.json` (estos sí se incluyen en el repositorio).
+- **Cambia según el sistema**: algunas dependencias compilan código nativo específico del sistema operativo, por lo que la carpeta generada en una máquina no siempre es compatible con otra.
+- **Genera conflictos innecesarios**: si varios desarrolladores subieran su propia versión de `node_modules`, se generarían conflictos constantes sin ningún beneficio real.
+
+En resumen: no tiene sentido versionar algo que se puede reconstruir automáticamente a partir de otro archivo que sí está en el repositorio.
+
+### ¿Por qué un `.env` puede contener información que no debería publicarse?
+
+El archivo `.env` se usa para guardar **variables de entorno**, es decir, valores de configuración que suelen ser sensibles o que cambian según el entorno (desarrollo, pruebas, producción). Por ejemplo:
+
+```
+DATABASE_URL=postgres://usuario:contraseña@servidor:5432/basededatos
+API_KEY=sk_live_51Hxy...
+JWT_SECRET=una-clave-super-secreta
+EMAIL_PASSWORD=miContraseñaDeCorreo
+```
+
+Este tipo de información **no debe subirse a un repositorio público (ni siquiera privado, como buena práctica)** porque:
+
+- **Expone credenciales reales**: contraseñas de bases de datos, claves de API, tokens de servicios externos (pagos, correo, almacenamiento en la nube), etc.
+- **Puede comprometer sistemas completos**: si alguien obtiene esas claves, podría acceder a bases de datos, servicios de pago, o hacer un uso indebido de servicios pagados a nombre del proyecto.
+- **El historial de Git es permanente**: incluso si luego borras el archivo `.env`, su contenido queda registrado en el historial de commits y puede recuperarse fácilmente, a menos que se reescriba el historial (algo complicado y riesgoso).
+- **Cada entorno puede necesitar valores distintos**: en desarrollo, pruebas y producción normalmente se usan credenciales diferentes, así que no tiene sentido "fijarlas" dentro del código versionado.
+
+Por eso, la práctica recomendada es:
+
+1. Agregar `.env` al archivo `.gitignore`.
+2. Compartir en el repositorio un archivo de ejemplo como `.env.example`, con las mismas variables pero sin valores reales (por ejemplo `API_KEY=tu-api-key-aqui`), para que otros desarrolladores sepan qué variables necesitan configurar sin exponer las credenciales reales.
